@@ -20,7 +20,6 @@ bool pop(Node* tail, Elem& data)
     if(!empty(tail)) {
         data = p->data;
         tail->next = p->next;
-        cerr << p->data << "#" << endl;
         delete p;
         return true;
     }
@@ -33,8 +32,6 @@ void push(Node*& tail, Elem data)
     p->next = tail->next;
     tail->next = p;
     tail = p;
-    // cerr << tail->data << "%" << endl;
-
 }
 void clear(Node*& tail)
 {
