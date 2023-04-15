@@ -55,6 +55,6 @@ int main()
         push(tail, i);
     }
     clear(tail);
-    
+    //modify in windows
     return 0;
 }
