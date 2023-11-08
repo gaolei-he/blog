@@ -7,3 +7,7 @@
 [C++数据结构的可能实现](C++%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%8F%AF%E8%83%BD%E5%AE%9E%E7%8E%B0)
 
 [pbds的简单使用](pbds%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8.md)
+
+[自动登录校园网](log_in_to_campus_network.py)
+
+[多线程简单测试](matrix_calc.cpp)
