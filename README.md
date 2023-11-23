@@ -11,3 +11,5 @@
 [自动登录校园网](log_in_to_campus_network.py)
 
 [多线程简单测试](matrix_calc.md)
+
+[多线程实例](multi_thread.md)
