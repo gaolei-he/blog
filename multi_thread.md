@@ -122,6 +122,11 @@ int main()
 $生产者-消费者（多进程，C语言+信号量实现）$
 
 ```c
+/* 生产者-消费者问题
+ * 一个生产者进程，多个消费者进程
+ * 缓冲区为文件
+ * 使用信号量实现
+ */
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <semaphore.h>
