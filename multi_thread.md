@@ -144,16 +144,16 @@ void producer()
 {
     for (int resource = 0; resource < M; resource++)
     {
-        fflush(stdout);
-        sem_wait(empty);
-        sem_wait(mutex);
+        fflush(stdout); // 刷新缓冲区，使printf立即输出
+        sem_wait(empty); // P操作
+        sem_wait(mutex); // P操作
 
-        fseek(file, resource * 4 + 4, SEEK_SET);
-        fwrite(&resource, 4, 1, file);
-        fflush(file);
+        fseek(file, resource * 4 + 4, SEEK_SET); // 定位文件写入位置
+        fwrite(&resource, 4, 1, file); // 写入文件（生产操作）
+        fflush(file); // 刷新文件写入缓冲区
 
-        sem_post(mutex);
-        sem_post(full);
+        sem_post(mutex); // V操作
+        sem_post(full); // V操作
     }
 }
 void consumer()
@@ -161,29 +161,34 @@ void consumer()
     int buf_out = 0;
     for (int cnt = 0; cnt < M / N; cnt++)
     {
-        sem_wait(full);
-        sem_wait(mutex);
+        sem_wait(full); // P操作
+        sem_wait(mutex); // P操作
 
+        // 读取文件头部的整数，获取当前消费者读取的位置
         fseek(file, 0, SEEK_SET);
         fread(&buf_out, 4, 1, file);
         buf_out += 1;
         fseek(file, 0, SEEK_SET);
         fwrite(&buf_out, 4, 1, file);
+
+        // 读取文件（消费操作）
         fseek(file, buf_out * 4, SEEK_SET);
         fread(&buf_out, 4, 1, file);
         printf("%d: %d\n", getpid(), buf_out);
         fflush(file);
 
-        sem_post(mutex);
-        sem_post(empty);
+        sem_post(mutex); // V操作
+        sem_post(empty); // V操作
     }
 }
 int main()
 {
+    // 创建信号量
     empty = sem_open("/empty", O_CREAT, 0644, BUFFER_SIZE);
     full = sem_open("/full", O_CREAT, 0644, 0);
     mutex = sem_open("/mutex", O_CREAT, 0644, 1);
 
+    // 初始化文件，文件头部保存一个整数，用于记录当前消费者读取的位置
     int buf_out = 0;
     file = fopen("file.txt", "wb+");
     fseek(file, 0, SEEK_SET);
@@ -192,21 +197,24 @@ int main()
 
     if(!fork())
     {
-        producer();
+        producer(); // 生产者进程
         exit(0);
     }
     for(int i = 0; i < N; i++)
     {
         if(!fork())
         {
-            consumer();
+            consumer(); // 多个消费者进程
             exit(0);
         }
     }
+
+    // 主进程等待所有子进程结束
     for(int i = 0; i < N + 1; i++)
         wait(NULL);
 
 
+    // 关闭信号量，关闭文件（缓冲区）
     fclose(file);
     sem_unlink("/empty");
     sem_unlink("/full");
