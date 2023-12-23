@@ -71,4 +71,4 @@ void clear(Node*& tail)
 }
 ```
 
-[完整代码](%E9%93%BE%E5%BC%8F%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97.cpp)
+[完整代码](pointer_code.cpp)
