@@ -74,13 +74,13 @@
     <hr>
 
     <h2 id="错误">错误 </h2>
-    <p>网站无法访问的情况下，可以查看<code><b>/var/log/nginx/error.log<code></b>，查看错误日志。<br>
-    对于部分<code><b>Permission denied<code></b>的错误，有可能是<code><b>nginx<code></b>运行的用户<code><b>www-data<code></b>没有权限访问网站根目录或其中的文件，这里提供两种解决方案。
+    <p>网站无法访问的情况下，可以查看<code>/var/log/nginx/error.log<code>，查看错误日志。<br>
+    对于部分<code>Permission denied<code>的错误，有可能是<code>nginx<code>运行的用户<code>www-data<code>没有权限访问网站根目录或其中的文件，这里提供两种解决方案。
     </p>
     <ol>
-        <li>修改<code><b>nginx<code></b>运行的用户为<code><b>root<code></b>，即修改<code><b>/etc/nginx/nginx.conf<code></b>文件的<code><b>user www-data;<code></b>为<code><b>user root<code></b>，这种方法不推荐，因为<code><b>root<code></b>用户权限太高，不安全。
+        <li>修改<code>nginx<code>运行的用户为<code>root<code>，即修改<code>/etc/nginx/nginx.conf<code>文件的<code>user www-data;<code>为<code>user root<code>，这种方法不推荐，因为<code>root<code>用户权限太高，不安全。
         </li>
-        <li>当网站目录属于某个非<code><b>root<code></b>用户时，可以将<code><b>nginx<code></b>运行的用户修改为该用户，即修改<code><b>/etc/nginx/nginx.conf<code></b>文件的<code><b>user www-data;<code></b>为<code><b>user username<code></b>，或者也可以将<code><b>www-data<code></b>用户加入到该用户组中，即<code><b>gpasswd -a www-data username<code></b>。
+        <li>当网站目录属于某个非<code>root<code>用户时，可以将<code>nginx<code>运行的用户修改为该用户，即修改<code>/etc/nginx/nginx.conf<code>文件的<code>user www-data;<code>为<code>user username<code>，或者也可以将<code>www-data<code>用户加入到该用户组中，即<code>gpasswd -a www-data username<code>。
             <a href="https://stackoverflow.com/questions/25774999/nginx-stat-failed-13-permission-denied">references</a>
         </li>
     </ol>
