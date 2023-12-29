@@ -1,3 +1,5 @@
+$Code$
+```cpp
 #include <iostream>
 using namespace std;
 typedef int Elem;
@@ -58,3 +60,4 @@ int main()
     //modify in windows
     return 0;
 }
+```
