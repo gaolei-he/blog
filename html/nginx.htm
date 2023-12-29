@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Gaolei He">
+    <meta name="description" content="how to setup nginx on your server">
+    <title>Nginx</title>
+</head>
+
+<body>
+    <h1 align="center"><code>Nginx</code> 的简单配置</h1>
+    <hr>
+    <h2 id="背景介绍">背景介绍</h2>
+    <p><code>Nginx</code>是一个网页服务器，简单来说，就是你服务器上写好了网页，但是你想让别人访问你的网页，那么你就需要一个网页服务器，<code>Nginx</code>就是这样一个网页服务器。</p>
+    <ul>
+        <li> <a href="https://zh.wikipedia.org/zh-cn/Nginx">nginx-wikipedia</a> </li>
+        <li> <a href="https://www.nginx.com/">nginx-website</a> </li>
+        </p>
+    </ul>
+
+    <hr>
+
+    <h2 id="安装">安装 </h2>
+    <p>这里以<code>Ubuntu</code>为例，其他系统请自行搜索。</p>
+    <pre>
+    sudo apt update <br>
+    sudo apt install nginx
+    </pre>
+
+    <hr>
+
+    <h2 id="基本配置">基本配置</h2>
+    <p>一般情况下，Nginx的配置文件在<code><b>/etc/nginx/nginx.conf</b></code>，这里我们仅仅介绍一些基本的配置。</p>
+    <pre>
+    <code>
+    user www-data; # nginx运行的用户
+    ...
+    http {
+        ...
+        access_log /var/log/nginx/access.log; # 访问日志
+        error_log /var/log/nginx/error.log; # 错误日志
+        ...
+    }
+    </code>
+    </pre>
+    <p>对于网站的基本配置，我们可以在<code> <strong>/etc/nginx/sites-available/default</strong> </code>中进行配置，同样这里我们仅仅介绍一些基本的配置。</p>
+    <pre>
+    <code>
+    server {
+        listen 80 default_server; # 监听80端口
+        listen [::]:80 default_server; # 监听ipv6的80端口
+        ...
+        root /var/www/html; # 网站的根目录，如需修改网站根目录，只需修改后半部分的路径即可
+        index index.html index.htm index.nginx-debian.html; # 默认的网页文件
+        ...
+    }
+    </code>
+    </pre>
+    <p>配置完成后，使用<code><b>undo nginx -t</b></code>检查配置文件是否正确</p>
+
+    <hr>
+
+    <h2 id="启动">启动 </h2>
+    <p>启动Nginx</p>
+    <pre><code>    sudo service nginx start</code></pre>
+    <p>重启Nginx</p>
+    <pre><code>    sudo service nginx restart</pre><code>
+    <p>查看Nginx状态</p>
+    <pre><code>    sudo service nginx status</pre><code>
+    <p>停止Nginx</p>
+    <pre><code>    sudo service nginx stop</pre><code>
+
+    <hr>
+
+    <h2 id="错误">错误 </h2>
+    <p>网站无法访问的情况下，可以查看<code><b>/var/log/nginx/error.log<code></b>，查看错误日志。<br>
+    对于部分<code><b>Permission denied<code></b>的错误，有可能是<code><b>nginx<code></b>运行的用户<code><b>www-data<code></b>没有权限访问网站根目录或其中的文件，这里提供两种解决方案。
+    </p>
+    <ol>
+        <li>修改<code><b>nginx<code></b>运行的用户为<code><b>root<code></b>，即修改<code><b>/etc/nginx/nginx.conf<code></b>文件的<code><b>user www-data;<code></b>为<code><b>user root<code></b>，这种方法不推荐，因为<code><b>root<code></b>用户权限太高，不安全。
+        </li>
+        <li>当网站目录属于某个非<code><b>root<code></b>用户时，可以将<code><b>nginx<code></b>运行的用户修改为该用户，即修改<code><b>/etc/nginx/nginx.conf<code></b>文件的<code><b>user www-data;<code></b>为<code><b>user username<code></b>，或者也可以将<code><b>www-data<code></b>用户加入到该用户组中，即<code><b>gpasswd -a www-data username<code></b>。
+            <a href="https://stackoverflow.com/questions/25774999/nginx-stat-failed-13-permission-denied">references</a>
+        </li>
+    </ol>
+</body>
+
+</html>
