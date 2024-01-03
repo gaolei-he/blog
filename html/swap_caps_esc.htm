@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Gaolei He">
+    <meta name="description" content="a few ways to swap caps and esc">
+    <title>Swap Caps and Esc</title>
+</head>
+
+<body>
+    <h1>交换<code>Esc</code>与<code>Caps</code>键的几种方法</h1>
+    <hr>
+    <h2><code>Windows</code></h2>
+    <h3><code>PowerToys</code></h3>
+    <p>在<code>Microsoft Store</code>中下载<code>PowerToys</code>，其中有一个<code>Keyboard Manager</code>的工具，可以用来交换键位</p>
+    <hr>
+    <h2><code>Linux(Ubuntu)</code></h2>
+    <h3><code>GUI</code></h3>
+    <p>无论是<code>Xorg</code>还是<code>Wayland</code>，该方法都适用</p>
+    <p>修改<code>/usr/share/X11/xkb/symbols/pc</code></p>
+    <p>文件内容类似</p>
+<pre><code>
+    key  &lt;ESC&gt; {    [ Escape        ]   };
+    key &lt;CAPS&gt; {    [ Caps_Lock     ]   };
+</code></pre>
+    <p>修改后为</p>
+<pre><code>
+    key  &lt;ESC&gt; {    [ Caps_Lock     ]   };
+    key &lt;CAPS&gt; {    [ Escape        ]   };
+</code></pre>
+    <hr>
+    <h3><code>CLI</code></h3>
+    <ol>
+        <li><p>运行以下命令，备份当前键盘映射<table cellPadding="10px"><tr><td><font color="#000000"><font face="monospace">
+            dumpkeys > back.kmap <br>
+            cp back.kmap new.kmap
+        </font></font></td></tr></table></p></li>
+
+        <li><p>修改<code>new.kmap</code>文件，将<code>Caps_Lock</code>和<code>Esc</code>的映射交换<table cellPadding="10px"><tr><td><font color="#000000"><font face="monospace">
+<pre>
+keycode 1 = Escape
+    ...
+keycode 58 = CtrlL_Lock
+    ...
+<br><hr>
+keycode 1 = CtrlL_Lock
+    ...
+keycode 58 = Escape
+    ...
+</pre>
+        </font></font></td></tr></table></p></li>
+
+        <li><p>运行以下命令，使新的键盘映射生效<table cellPadding="10px"><tr><td><font color="#000000"><font face="monospace">
+            loadkeys new.kmap
+        </font></font></td></tr></table></p></li>
+
+    </ol>
+
+    <h4>备注</h4>
+    <ol>
+        <li><code>CLI</code>下修改映射后，若要恢复，运行以下命令加载原有键盘映射<table cellPadding="10px"><tr><td><font color="#000000"><font face="monospace">
+            loadkeys back.kmap
+        </font></font></td></tr></table></p></li>
+        <li>若要每次开机自动生效，将以下命令添加到<code>/etc/rc.local</code>中<br>需要注意，<code>/etc/rc.local</code>
+        文件需要有可执行权限，可运行<code>sudo chmod u+x /etc/rc.local</code>赋予其可执行权限<br>同时注意修改你的键盘映射文件路径
+        <table cellPadding="10px"><tr><td><font color="#000000"><font face="monospace">
+            #!/bin/bash <br>
+            /usr/bin/loadkeys /path/to/new.kmap
+        </font></font></td></tr></table></p></li>
+
+    </ol>
+
+</body>
