@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱尚音乐</title>
+    <!-------引入外部文件-------->
+    <link rel="stylesheet" href="css/music.css"/>
+    <!-------引入网站图标-------->
+    <link rel="icon" href="favicon.ico">
+</head>
+<body>
+    
+    <!---------banner--------->
+    <div class="banner">
+        <ul >
+            <li id="img1" class="img1 img" datasrc="mp3/G.E.M.邓紫棋 - 龙卷风.mp3" >
+                <img src="img/1.jpg" title="龙卷风-邓紫棋" width="65"/>
+
+            </li>
+            <li id="img2" class="img2 img" datasrc="mp3/Sober-bigbang.mp3">
+                <img src="img/2.jpg" title="Sober-bigbang" width="90"/>
+            </li>
+            <li id="img3" class="img3 img" datasrc="mp3/绅士-薛之谦.mp3" >
+                <img src="img/3.jpg" title="绅士-薛之谦" width="119"/>
+            </li>
+            <li id="img4" class="img4 img" datasrc="mp3/杀手-林俊杰.mp3" >
+                <img src="img/4.jpg" title="杀手-林俊杰" width="90"/>
+            </li>
+            <li id="img5" class="img5 img" datasrc="mp3/Baby-Justin Bieber.mp3" >
+                <img src="img/5.jpg" title="baby-justin bieber" width="65"/>
+            </li>
+        </ul>
+    </div>
+    <!---------banner--------->
+    <!---------music---------->
+    <div class="music">
+        <div class="m_img">
+            <img src="img/1.jpg" title="龙卷风-邓紫棋" width="90"/>
+        </div>
+        <div class="m_text">龙卷风-邓紫棋</div>
+        <div class="m_btn">
+            <a id="b1" href="#" class="m_prev btn1" title="上一首"></a>
+            <a id="b2" href="#" class="m_play btn1" title="播放"></a>
+            <a id="b3" href="#" class="m_next btn1" title="下一首"></a>
+        </div>
+        <div class="m_close"></div>
+        <audio src="mp3/G.E.M.邓紫棋 - 龙卷风.mp3" class="1_mp3"></audio>
+
+    </div>
+    <!---------music--------->
+    <script type="text/javascript" src="js/music.js"></script>
+    <!-- <script>
+        console.log(2)
+        var li=document.querySelectorAll(".banner ul li");//获取所有li元素
+        li.onclick=function(){
+            console.log(10)
+        }
+    </script> -->
+</body>
+</html>
