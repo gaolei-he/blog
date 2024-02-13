@@ -1,0 +1,179 @@
+/*采用什么编码解析文件*/
+@charset "utf-8";
+
+body{
+    background-image: url(../img/bg.jpg);
+    background-repeat: no-repeat;/*图片不重复*/
+    background-size: cover;/*自适应*/
+}
+
+/*----------------------------横幅start-------------------------*/
+/* 设置横幅属性 */
+.banner{
+    background-image: url(../img/m_bg.jpg);/*背景图片*/
+    background-size: 960px;/*背景图片大小*/
+    background-repeat:no-repeat;/*不重复*/
+    margin: 400px;/*偏移*/
+    opacity: 0.8;/*透明度*/
+    box-shadow: 20px 10px 15px 0px rgb(76, 43, 43);/*阴影属性*/
+    width: 960px;/*大小*/
+    height: 250px;
+    position: relative;/*相对定位*/
+}
+.banner ul li{
+    list-style: none;
+    display: inline;
+    position: absolute;/*使用绝对定位*/
+}
+.banner ul li img{
+    border-radius: 50%;/*图片变圆*/
+    cursor: pointer;/*鼠标变手势*/
+}
+.img1{
+    top:30px ;
+    left:90px;
+}
+.img2{
+    top:140px ;
+    left:160px;
+}
+.img3{
+    top:67px ;
+    left:308px;
+}
+.img4{
+    top:50px ;
+    left:500px;
+}
+.img5{
+    top:160px ;
+    left:580px;
+}
+/*图片旋转的动画*/
+@keyframes img_rotate{
+    from{
+        transform: rotate(0deg);
+    } to { 
+        transform:rotate(360deg);
+    }
+}
+/*将动画绑定到类上*/
+.img_rotate{
+    animation: img_rotate 2s infinite linear;
+}
+
+/*----------------------------横幅end-------------------------*/
+
+
+
+/*--------------------------播放器start-----------------------*/
+/*播放器收缩的动画*/
+@keyframes move_left{
+    0% { transform: translateX(0); }/*在x轴0px的位置*/
+    100% { transform: translateX(-574px); }/*在x轴-574px的位置*/
+}
+.move_left{
+    animation: move_left;/*类中引入动画*/
+    animation-duration: 2s;/*动画时间2s*/
+    animation-iteration-count: 1;/*次数一次*/
+    animation-fill-mode: forwards;/*移动到最后，保持此位置*/
+}
+@keyframes move_right{
+    0% { transform: translateX(-574px); }/*在x轴-574px的位置*/
+    100% { transform: translateX(0px); }/*在x轴0px的位置*/
+}
+.move_right{
+    animation: move_right;/*类中引入动画*/
+    animation-duration: 2s;/*动画时间2s*/
+    animation-iteration-count: 1;/*次数一次*/
+    animation-fill-mode: forwards;/*移动到最后，保持此位置*/
+}
+/*修改播放器属性*/
+.music{
+    width: 600px;
+    height: 120px;
+    background-color: black;
+    position: relative;
+    left: 0px;
+    bottom: 50px;
+    opacity: 0.8;
+    box-shadow: 20px 10px 15px 0px rgb(76, 43, 43);/*阴影属性*/
+}
+.m_img{
+    margin-top: 15px;
+    margin-left: 10px;
+    float: left;
+}
+.m_text{
+    font-size: 20px;/*字体大小*/
+    font-weight: bold;/*字体加粗*/
+    margin-top: 50px;/*外边距*/
+    margin-left: 20px;/*外边距*/
+    color: aliceblue;/*颜色*/
+    float: left;/*左浮动*/
+}
+.m_btn{/*固定按钮，防止名字长短不一，改变按钮位置*/
+    float: left;
+    position: absolute;
+    left:350px;
+}
+.m_btn .btn1{
+    float:left;
+    width: 35px;
+    height: 35px;
+    background-image: url(../img/player_bg1.jpg);
+    background-size: 120px;
+    margin-top: 50px;
+    margin-right:30px;
+}
+.m_btn .btn2{
+    float:left;
+    width: 35px;
+    height: 35px;
+    background-image: url(../img/player_bg2.jpg);
+    background-size: 80px;
+    margin-top: 50px;
+    margin-right:30px;
+}
+.m_prev{
+    background-position: 0px 2px;
+}
+.m_prev:hover{
+    background-position: 0px -34px;
+}
+.m_play{
+    background-position: -40px -2px;
+}
+.m_play:hover{
+    background-position: -40px -48px;
+}
+.m_pause{
+    background-position: -2px -7px;
+}
+.m_pause:hover{
+    background-position: -44px -9px;
+}
+.m_next{
+    background-position: -80px 2px;
+}
+.m_next:hover{
+    background-position: -80px -34px;
+}
+.m_close{
+    float: right;
+    background-image: url(../img/player_close.jpg);
+    width: 26px;
+    height: 120px;
+    background-position: -10.5px -27px; 
+    cursor: pointer;
+}
+.m_open{
+    float: right;
+    background-image: url(../img/player_close.jpg);
+    width: 26px;
+    height: 120px;
+    background-position: -67px -27px; 
+    cursor: pointer;
+}
+
+/*--------------------------播放器end-----------------------*/
