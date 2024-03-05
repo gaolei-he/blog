@@ -136,6 +136,8 @@ fi
     - `if [[ $a < $b ]]`
 - `>` greater than
     - `if [[ $a > $b ]]`
+- `-z` string is null, zero length
+    - `if [ -z $a ]`
 
 ```bash
 #! /bin/bash
@@ -165,4 +167,235 @@ then
 else
     echo "condition is false"
 fi
+```
+
+## File Test Operators
+
+```bash
+#! /bin/bash
+
+echo -e "Enter the name of the file : \c"
+
+read file_name
+
+# -e 选项，判断文件或文件夹是否存在
+# -f 选项，判断文件是否存在(文件属性为-)
+# -d 选项，判断文件夹是否存在(文件属性为d)
+# -b 选项，判断是否为块设备文件
+# -c 选项，判断是否为字符设备文件
+# -s 选项，判断文件是否为空
+# -r 选项，判断文件是否可读
+# -w 选项，判断文件是否可写
+# -x 选项，判断文件是否可执行
+
+if [ -e $file_name ]
+then
+    echo "$file_name found"
+else
+    echo "$file_name not found"
+fi
+
+if [ -s $file_name ]
+then
+    echo "$file_name is not empty"
+else
+    echo "$file_name is empty"
+fi
+```
+
+## Append Text to File
+
+使用`cat >>`命令将输入内容追加到文件中
+
+```bash
+#!/bin/bash
+echo -e "Enter the name of the file : \c"
+
+read file_name
+
+if [ -f $file_name ]
+then
+    if [ -w $file_name ]
+    then
+        echo "Type some text data. To quit press ctrl+d"
+        cat >> $file_name
+    else
+        echo "The file do not have write permission"
+    fi
+else
+    echo "$file_name not exists"
+fi
+```
+
+## And Or Operators
+
+基本格式
+
+```bash
+# And Operator
+[ condition1 ] && [ condition2 ]
+[ condition1 -a condition2 ]
+[[ condition1 && condition2 ]]
+
+# Or Operator
+[ condition1 ] || [ condition2 ]
+[ condition1 -o condition2 ]
+[[ condition1 || condition2 ]]
+```
+```bash
+#!/bin/bash
+
+age=45
+
+if [ "$age" -gt 18 ] && [ "$age" -lt 30 ]
+then
+    echo "Valid age"
+elif [ "$age" -gt 30 -a "$age" -lt 40 ]
+then
+    echo "Age is between 30 and 40"
+elif [[ "$age" -gt 40 && "$age" -lt 50 ]]
+then
+    echo "Age is between 40 and 50"
+else
+    echo "Age not valid"
+fi
+```
+
+## Arthimetic Operations
+
+算数运算符，包括`+` `-` `*` `/` `%`等
+```bash
+#!/bin/bash
+
+num1=20
+num2=3
+
+echo $(( num1 + num2 ))
+echo $(( num1 - num2 ))
+echo $(( num1 * num2 ))
+echo $(( num1 / num2 ))
+echo $(( num1 % num2 ))
+
+echo $(expr $num1 + $num2)
+echo $(expr $num1 - $num2)
+echo $(expr $num1 \* $num2)
+echo $(expr $num1 / $num2)
+echo $(expr $num1 % $num2)
+```
+
+浮点数运算，bash本身不支持，借助`bc`实现  
+注意，`bc`支持任意精度的浮点数运算
+
+```bash
+#!/bin/bash
+
+num1=20.5
+num2=3
+
+echo "20.5+5" | bc
+echo "20.5-5" | bc
+echo "20.5*5" | bc
+echo "scale=2;20.5/5" | bc
+echo "20.5%5" | bc
+
+echo "$num1+$num2" | bc
+echo "$num1-$num2" | bc
+echo "$num1*$num2" | bc
+echo "scale=2;$num1/$num2" | bc
+echo "$num1%$num2" | bc
+
+echo "scale=40;a(1)*4" | bc -l
+echo "scale=2;3^3" | bc -l
+```
+
+## Case Statement
+
+基本语法
+
+```bash
+#!/bin/bash
+
+case expression in
+    pattern1 )
+        statements ;;
+    pattern2 )
+        statements ;;
+    ...
+    patternN )
+        statements ;;
+    * )
+        statements ;;
+esac
+```
+
+实例
+
+```bash
+#!/bin/bash
+
+vechicle=$1
+
+case $vechicle in
+    "car" )
+        echo "Rent of $vechicle is 100 dollar" ;;
+    "van" )
+        echo "Rent of $vechicle is 80 dollar" ;;
+    "bicycle" )
+        echo "Rent of $vechicle is 5 dollar" ;;
+    "truck" )
+        echo "Rent of $vechicle is 150 dollar" ;;
+    * )
+        echo "Unknown vechicle" ;;
+esac
+```
+
+使用正则表达式
+
+```bash
+#!/bin/bash
+
+echo -e "Enter some character: \c"
+
+read value
+
+case $value in
+    [a-z] )
+        echo "Lower case character" ;;
+    [A-Z] )
+        echo "Upper case character" ;;
+    [0-9] )
+        echo "Number" ;;
+    ? )
+        echo "Special character" ;;
+    * )
+        echo "Unknown input" ;;
+esac
+```
+
+## Array
+
+数组
+bash中数组下标从0开始，下标可以不连续
+
+```bash
+#!/bin/bash
+
+os=("ubuntu" "windows" "kali")
+os[3]="mac"
+
+unset os[2]
+
+os[5]="fedora"
+echo "${os[@]}"
+echo "${os[1]}"
+# all index
+echo "${!os[@]}"
+# length
+echo "${#os[@]}"
+
+string="hello world"
+echo "${string[@]}"
+echo "${string[0]}"
+echo "${string[1]}"
+echo "${#string[@]}"
 ```
