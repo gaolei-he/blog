@@ -399,3 +399,241 @@ echo "${string[0]}"
 echo "${string[1]}"
 echo "${#string[@]}"
 ```
+
+## While Loop
+
+基本语法
+
+```bash
+while [ condition ]
+do
+    statement
+done
+```
+
+```bash
+#!/bin/bash
+
+n=1
+while [ $n -le 10 ]; do
+    echo $n
+    n=$((n + 1))
+    sleep 1s
+done
+```
+
+## Reading files
+
+```bash
+#!/bin/bash
+
+while read p; do
+    echo $p
+done </etc/host.conf
+
+cat ./md/hello.sh | while read p; do
+    echo $p
+done
+
+while IFS= read -r line; do
+    echo $line
+done </etc/host.conf
+```
+
+## UNTIL loop
+
+基本语法
+
+```bash
+# if condition is false, then statement will be executed
+until [ condition ]
+do
+    statement
+done
+```
+
+## FOR loop
+
+基本语法
+
+```bash
+for var in 1 2 3 4 5
+do
+    statement
+done
+
+for var in file1 file2 file3
+do
+    statement
+done
+
+for var in $(Linux-Or-Unix-Command-Here)
+do
+    statement
+done
+
+for (( exp1; exp2; exp3 ))
+do
+    statement
+done
+```
+
+实例
+
+```bash
+#!/bin/bash
+
+for var in 1 2 3 4 5; do
+    echo $var
+done
+
+for file in $(ls); do
+    echo $file
+done
+
+for ((i = 0; i < 10; i++)); do
+    echo $i
+done
+
+for i in {1..10}; do
+    echo $i
+done
+
+for file in *; do
+    if [ -d "$file" ]; then
+        echo $file
+    fi
+done
+```
+
+## Select loop
+
+```bash
+#!/bin/bash
+
+select name in mark john tom ben; do
+    case $name in
+    mark) echo mark selected ;;
+    john) echo john selected ;;
+    tom) echo tom selected ;;
+    ben) echo ben selected ;;
+    *) echo "Error: Please try again" ;;
+    esac
+done
+```
+
+## Break and Continue
+
+```bash
+#!/bin/bash
+
+for ((i = 0; i < 5; i++)); do
+    if [ $i -gt 3 ]; then
+        break
+    else
+        echo "i = $i"
+        continue
+    fi
+done
+```
+
+## Functions
+
+```bash
+#!/bin/bash
+
+function fib() {
+    if [ $1 -le 2 ]; then
+        echo 1
+    else
+        echo $(($(fib $(($1 - 1))) + $(fib $(($1 - 2)))))
+    fi
+}
+
+fib 10
+
+function hello() {
+    echo "Hello, World!"
+    echo $1 $2
+}
+
+hello var1 var2
+```
+
+## Local Variables
+
+```bash
+#!/bin/bash
+
+function modify1() {
+    name="Jerry"
+}
+function modify2() {
+    local name="Mark"
+}
+
+name="Tom"
+echo "Before modify1: $name"
+modify1
+echo "After modify1: $name"
+modify2
+echo "After modify2: $name"
+```
+
+## Readonly Command
+
+```bash
+#!/bin/bash
+
+var=31
+
+readonly var
+
+var=50
+
+echo "var => $var"
+
+hello() {
+    echo "Hello World"
+}
+
+readonly -f hello
+
+hello() {
+    echo "Hello World Again"
+}
+```
+
+## Signals and Traps
+
+```bash
+#!/bin/bash
+# 当侦测到0号信号时，执行echo Exit command is detected!命令
+# trap does not catch SIGKILL or SIGSTOP
+#!/bin/bash
+# 当侦测到0号信号时，执行echo Exit command is detected!命令
+trap "echo Exit command is detected!" 0
+trap "echo 'Ctrl+C is detected!'" SIGINT
+trap "echo Exit signal is detected!" SIGTERM
+echo "pid is $$"
+count=0
+while ((count < 10)); do
+    sleep 3s
+    sleep 3s
+    ((count++))
+    echo "count is $count"
+done
+
+exit 0
+```
+
+## Debugging Shell Scripts
+
+```bash
+#!/bin/bash
+# bash -x script.sh
+# stop debug
+set +x
+# start debug
+set -x
+```
